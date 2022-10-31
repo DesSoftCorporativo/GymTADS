@@ -4,7 +4,10 @@
  */
 package com.ifpe.edu.br.gymtads.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+
 
 /**
  *
@@ -12,16 +15,13 @@ import java.util.List;
  */
 
 public class Personal extends Usuario{
-    List<Aluno> alunos;
+
+    List<Aluno> alunos = new ArrayList<>();
     private String senha;
 
-    public String getSenha() {
-        return senha;
+    public Personal() {
     }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
+    
 
     public List<Aluno> getAlunos() {
         return alunos;
@@ -30,4 +30,14 @@ public class Personal extends Usuario{
     public void setAlunos(List<Aluno> alunos) {
         this.alunos = alunos;
     }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+    
+    
 }
