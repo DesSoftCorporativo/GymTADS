@@ -4,10 +4,15 @@
  */
 package com.ifpe.edu.br.gymtads.model;
 
+import jakarta.persistence.Entity;
+
 /**
  *
  * @author gabri
  */
+
+@Entity
+
 public class Aluno extends Usuario{
     private Personal personal;
     private Treino treino;   

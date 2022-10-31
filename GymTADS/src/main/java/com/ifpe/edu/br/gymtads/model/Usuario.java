@@ -14,6 +14,7 @@ import java.util.Date;
  *
  * @author gabri
  */
+
 public abstract class Usuario {
     private long id;
     private String nome;
