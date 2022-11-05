@@ -4,14 +4,14 @@
  */
 package com.ifpe.edu.br.gymtads.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
- *
  * @author gabri
  */
-public class Treino {
+public class Treino implements Serializable {
 
     private long id;
     private Date inicio;

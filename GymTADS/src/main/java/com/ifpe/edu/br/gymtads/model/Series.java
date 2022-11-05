@@ -1,6 +1,8 @@
 package com.ifpe.edu.br.gymtads.model;
 
-public class Series {
+import java.io.Serializable;
+
+public class Series implements Serializable {
 
     private String equipamento;
     private String repedicoes;

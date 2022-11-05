@@ -12,7 +12,6 @@ import jakarta.persistence.Entity;
  */
 
 @Entity
-
 public class Aluno extends Usuario{
     private Personal personal;
     private Treino treino;   

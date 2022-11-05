@@ -1,28 +1,36 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.ifpe.edu.br.gymtads.model;
 
-/**
- *
- * @author gabri
- */
+import jakarta.persistence.*;
+
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Objects;
 
-/**
- *
- * @author gabri
- */
+@Entity
+@Table(name = "TB_USUARIO")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "DISC_USUARIO",
+        discriminatorType = DiscriminatorType.STRING, length = 1)
+public abstract class Usuario implements Serializable {
 
-public abstract class Usuario {
-    private long id;
-    private String nome;
-    private String sobrenome;
-    private String cpf;
-    private String endereco;
-    private String telefone;
-    private Date nascimento;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected long id;
+    @Column(name = "TXT_NAME")
+    protected String nome;
+    @Column(name = "TXT_SOBRENOME")
+    protected String sobrenome;
+    @Column(name = "TXT_CPF")
+    protected String cpf;
+    @Column(name = "TXT_ENDERECO")
+    protected String endereco;
+    @ElementCollection
+    @CollectionTable(name = "TB_TELEFONE", joinColumns = @JoinColumn(name = "ID_USUARIO"))
+    @Column(name = "TXT_NUM_TELEFONE")
+    protected Collection<String> telefones;
+    @Column(name = "DT_NAME")
+    protected Date nascimento;
 
     public long getId() {
         return id;
@@ -64,12 +72,12 @@ public abstract class Usuario {
         this.endereco = endereco;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public Collection<String> getTelefones() {
+        return telefones;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setTelefones(Collection<String> telefones) {
+        this.telefones = telefones;
     }
 
     public Date getNascimento() {
@@ -78,5 +86,31 @@ public abstract class Usuario {
 
     public void setNascimento(Date nascimento) {
         this.nascimento = nascimento;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", sobrenome='" + sobrenome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", endereco='" + endereco + '\'' +
+                ", telefones=" + telefones +
+                ", nascimento=" + nascimento +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return id == usuario.id && Objects.equals(nome, usuario.nome) && Objects.equals(sobrenome, usuario.sobrenome) && Objects.equals(cpf, usuario.cpf) && Objects.equals(endereco, usuario.endereco) && Objects.equals(telefones, usuario.telefones) && Objects.equals(nascimento, usuario.nascimento);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome, sobrenome, cpf, endereco, telefones, nascimento);
     }
 }
