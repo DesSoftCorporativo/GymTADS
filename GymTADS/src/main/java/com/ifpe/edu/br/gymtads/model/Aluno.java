@@ -1,20 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.ifpe.edu.br.gymtads.model;
 
-import jakarta.persistence.Entity;
-
-/**
- *
- * @author gabri
- */
+import jakarta.persistence.*;
 
 @Entity
-public class Aluno extends Usuario{
+@Table(name = "TB_ALUNO")
+@DiscriminatorValue(value = "A")
+@PrimaryKeyJoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")
+public class Aluno extends Usuario {
+
+    @ManyToOne //todo precisa rever esse ponto
     private Personal personal;
-    private Treino treino;   
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "ID_TREINO", referencedColumnName = "ID")
+    private Treino treino;
+
+    public Aluno() {
+    }
 
     public Personal getPersonal() {
         return personal;
@@ -31,5 +32,12 @@ public class Aluno extends Usuario{
     public void setTreino(Treino treino) {
         this.treino = treino;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Aluno{" +
+                "personal=" + personal +
+                ", treino=" + treino +
+                '}';
+    }
 }

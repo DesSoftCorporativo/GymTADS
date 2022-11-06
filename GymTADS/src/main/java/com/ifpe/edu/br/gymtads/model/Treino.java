@@ -1,25 +1,44 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.ifpe.edu.br.gymtads.model;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author gabri
- */
+@Entity
+@Table(name = "ID_TREINO")
 public class Treino implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "DT_INICIO")
     private Date inicio;
+    @Column(name = "DT_FIM")
     private Date fim;
+
+    @ManyToOne
     private Personal personal;
-    private List<Series> series;
+
+    @OneToOne(mappedBy = "treino")
+    private Aluno aluno;
+
+    @ElementCollection
+    @CollectionTable(name = "TB_SERIE", joinColumns = @JoinColumn(name = "ID_USUARIO"))
+    @Column(name = "SERIES")
+    private List<Serie> series = new ArrayList<>();
 
     public Treino() {
+    }
+
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
     }
 
     public long getId() {
@@ -54,11 +73,23 @@ public class Treino implements Serializable {
         this.personal = personal;
     }
 
-    public List<Series> getSeries() {
+    public List<Serie> getSeries() {
         return series;
     }
 
-    public void setSeries(List<Series> series) {
+    public void setSeries(List<Serie> series) {
         this.series = series;
+    }
+
+    @Override
+    public String toString() {
+        return "Treino{" +
+                "id=" + id +
+                ", inicio=" + inicio +
+                ", fim=" + fim +
+                ", personal=" + personal +
+                ", aluno=" + aluno +
+                ", series=" + series +
+                '}';
     }
 }

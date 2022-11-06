@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "TB_ADMINISTRADOR")
 @DiscriminatorValue(value = "A")
 @PrimaryKeyJoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")
-public class Administrador extends Usuario{
+public class Administrador extends Usuario {
 
     @Column(name = "TXT_MATRICULA")
     private String matricula;
