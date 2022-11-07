@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 
 @Entity
@@ -17,18 +18,24 @@ public abstract class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long id;
+    
     @Column(name = "TXT_NAME")
     protected String nome;
+    
     @Column(name = "TXT_SOBRENOME")
     protected String sobrenome;
+    
     @Column(name = "TXT_CPF")
     protected String cpf;
+    
     @Column(name = "TXT_ENDERECO")
     protected String endereco;
+    
     @ElementCollection
     @CollectionTable(name = "TB_TELEFONE", joinColumns = @JoinColumn(name = "ID_USUARIO"))
     @Column(name = "TXT_NUM_TELEFONE")
     protected Collection<String> telefones;
+    
     @Column(name = "DT_NAME")
     protected Date nascimento;
 
@@ -76,8 +83,12 @@ public abstract class Usuario implements Serializable {
         return telefones;
     }
 
-    public void setTelefones(Collection<String> telefones) {
-        this.telefones = telefones;
+    public void addTelefone(String telefone) {
+        if(this.telefones == null){
+            telefones = new HashSet<>();
+        }
+        
+        telefones.add(telefone);
     }
 
     public Date getNascimento() {

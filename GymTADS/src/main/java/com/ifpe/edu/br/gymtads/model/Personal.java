@@ -11,17 +11,16 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")
 public class Personal extends Usuario {
 
-    @OneToMany //todo precisa rever esse ponto
-    @Column(name = "LIST_ALUNOS")
+    @OneToMany(mappedBy = "personal")
     private List<Aluno> alunos = new ArrayList<>();
+    
     @Column(name = "TXT_SENHA", nullable = false)
     private String senha;
 
     @Column(name = "TXT_MATRICULA", nullable = false)
     private String matricula;
 
-    @OneToMany //todo precisa rever esse ponto
-    @Column(name = "LIST_TREINOS")
+    @OneToMany(mappedBy = "personal")
     private List<Treino> treinos = new ArrayList<>();
 
     public Personal() {
@@ -31,8 +30,8 @@ public class Personal extends Usuario {
         return alunos;
     }
 
-    public void setAlunos(List<Aluno> alunos) {
-        this.alunos = alunos;
+    public void addAluno(Aluno aluno) {
+        this.alunos.add(aluno);
     }
 
     public String getSenha() {
@@ -55,8 +54,8 @@ public class Personal extends Usuario {
         return treinos;
     }
 
-    public void setTreinos(List<Treino> treinos) {
-        this.treinos = treinos;
+    public void addTreino(Treino treino) {
+        this.treinos.add(treino);
     }
 
     @Override

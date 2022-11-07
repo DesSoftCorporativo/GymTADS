@@ -14,31 +14,24 @@ public class Treino implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    
     @Column(name = "DT_INICIO")
     private Date inicio;
+    
     @Column(name = "DT_FIM")
     private Date fim;
 
     @ManyToOne
+    @JoinColumn(name = "ID_PERSONAL", referencedColumnName = "ID_USUARIO")
     private Personal personal;
 
     @OneToOne(mappedBy = "treino")
     private Aluno aluno;
 
-    @ElementCollection
-    @CollectionTable(name = "TB_SERIE", joinColumns = @JoinColumn(name = "ID_USUARIO"))
-    @Column(name = "SERIES")
+    @OneToMany(mappedBy = "treino")
     private List<Serie> series = new ArrayList<>();
 
     public Treino() {
-    }
-
-    public Aluno getAluno() {
-        return aluno;
-    }
-
-    public void setAluno(Aluno aluno) {
-        this.aluno = aluno;
     }
 
     public long getId() {
@@ -71,15 +64,26 @@ public class Treino implements Serializable {
 
     public void setPersonal(Personal personal) {
         this.personal = personal;
+        this.personal.addTreino(this);
+    }
+
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
     }
 
     public List<Serie> getSeries() {
         return series;
     }
 
-    public void setSeries(List<Serie> series) {
-        this.series = series;
+    public void addSerie(Serie serie) {
+        this.series.add(serie);
     }
+
+    
 
     @Override
     public String toString() {

@@ -10,6 +10,7 @@ public class Administrador extends Usuario {
 
     @Column(name = "TXT_MATRICULA")
     private String matricula;
+    
     @Column(name = "TXT_SENHA")
     private String senha;
 

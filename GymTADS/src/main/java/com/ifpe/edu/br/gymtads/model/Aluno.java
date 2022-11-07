@@ -8,8 +8,10 @@ import jakarta.persistence.*;
 @PrimaryKeyJoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")
 public class Aluno extends Usuario {
 
-    @ManyToOne //todo precisa rever esse ponto
+    @ManyToOne
+    @JoinColumn(name = "ID_PERSONAL", referencedColumnName = "ID_USUARIO")
     private Personal personal;
+    
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "ID_TREINO", referencedColumnName = "ID")
     private Treino treino;
@@ -23,6 +25,7 @@ public class Aluno extends Usuario {
 
     public void setPersonal(Personal personal) {
         this.personal = personal;
+        this.personal.addAluno(this);
     }
 
     public Treino getTreino() {
@@ -31,6 +34,7 @@ public class Aluno extends Usuario {
 
     public void setTreino(Treino treino) {
         this.treino = treino;
+        this.treino.setAluno(this);
     }
 
     @Override
