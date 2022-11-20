@@ -1,25 +1,43 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.ifpe.edu.br.gymtads.model;
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.Objects;
 
+/**
+ *
+ * @author angel
+ */
 @Entity
 @Table(name = "TB_USUARIO")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "DISC_USUARIO",
         discriminatorType = DiscriminatorType.STRING, length = 1)
 public abstract class Usuario implements Serializable {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
     
-    @Column(name = "TXT_NAME")
+    @Column(name = "TXT_NOME")
     protected String nome;
     
     @Column(name = "TXT_SOBRENOME")
@@ -28,22 +46,20 @@ public abstract class Usuario implements Serializable {
     @Column(name = "TXT_CPF")
     protected String cpf;
     
-    @Column(name = "TXT_ENDERECO")
-    protected String endereco;
+    @Embedded
+    protected Endereco endereco;
     
     @ElementCollection
-    @CollectionTable(name = "TB_TELEFONE", joinColumns = @JoinColumn(name = "ID_USUARIO"))
+    @CollectionTable(name = "TB_TELEFONE",
+            joinColumns = @JoinColumn(name = "ID_USUARIO"))
     @Column(name = "TXT_NUM_TELEFONE")
     protected Collection<String> telefones;
-    
-    @Column(name = "DT_NAME")
-    protected Date nascimento;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -71,57 +87,55 @@ public abstract class Usuario implements Serializable {
         this.cpf = cpf;
     }
 
-    public String getEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(String endereco) {
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
-
+    
     public Collection<String> getTelefones() {
         return telefones;
     }
 
     public void addTelefone(String telefone) {
-        if(this.telefones == null){
+        if (telefones == null) {
             telefones = new HashSet<>();
         }
-        
         telefones.add(telefone);
     }
-
-    public Date getNascimento() {
-        return nascimento;
+    
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
 
-    public void setNascimento(Date nascimento) {
-        this.nascimento = nascimento;
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Usuario)) {
+            return false;
+        }
+        Usuario other = (Usuario) object;
+
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", sobrenome='" + sobrenome + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", endereco='" + endereco + '\'' +
-                ", telefones=" + telefones +
-                ", nascimento=" + nascimento +
-                '}';
-    }
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.id);
+        sb.append(", ");
+        sb.append(this.nome);
+        sb.append(", ");
+        sb.append(this.sobrenome);
+        sb.append(", ");
+        sb.append(this.cpf);
+        sb.append(", ");
+        sb.append(this.endereco);
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Usuario usuario = (Usuario) o;
-        return id == usuario.id && Objects.equals(nome, usuario.nome) && Objects.equals(sobrenome, usuario.sobrenome) && Objects.equals(cpf, usuario.cpf) && Objects.equals(endereco, usuario.endereco) && Objects.equals(telefones, usuario.telefones) && Objects.equals(nascimento, usuario.nascimento);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nome, sobrenome, cpf, endereco, telefones, nascimento);
+        return sb.toString();
     }
 }

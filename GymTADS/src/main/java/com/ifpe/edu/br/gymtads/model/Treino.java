@@ -1,44 +1,70 @@
+    /*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.ifpe.edu.br.gymtads.model;
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ *
+ * @author angel
+ */
 @Entity
-@Table(name = "ID_TREINO")
+@Table(name = "TB_TREINO")
 public class Treino implements Serializable {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     
-    @Column(name = "DT_INICIO")
-    private Date inicio;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "DT_INICIO", nullable = true)
+    protected Date inicio;
     
-    @Column(name = "DT_FIM")
-    private Date fim;
-
-    @ManyToOne
-    @JoinColumn(name = "ID_PERSONAL", referencedColumnName = "ID_USUARIO")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "DT_fim", nullable = true)
+    protected Date fim;
+    
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "ID_PERSONAL", referencedColumnName = "ID")
     private Personal personal;
 
     @OneToOne(mappedBy = "treino")
     private Aluno aluno;
-
-    @OneToMany(mappedBy = "treino")
-    private List<Serie> series = new ArrayList<>();
-
-    public Treino() {
-    }
-
-    public long getId() {
+    
+    @Column(name = "TXT_DESCRICAO")
+    private String descricao;
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "TB_TREINO_EXERCICIOS", joinColumns = {
+        @JoinColumn(name = "ID_TREINO")}, inverseJoinColumns = {
+            @JoinColumn(name = "ID_EXERCICIO")})
+    private List<Exercicio> exercicios;
+    
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -64,7 +90,7 @@ public class Treino implements Serializable {
 
     public void setPersonal(Personal personal) {
         this.personal = personal;
-        this.personal.addTreino(this);
+        this.personal.setTreino(this);
     }
 
     public Aluno getAluno() {
@@ -75,25 +101,25 @@ public class Treino implements Serializable {
         this.aluno = aluno;
     }
 
-    public List<Serie> getSeries() {
-        return series;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void addSerie(Serie serie) {
-        this.series.add(serie);
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
+    public List<Exercicio> getExercicios() {
+        return exercicios;
+    }
+
+    public void setExercicio(Exercicio exercicio) {
+        if(this.exercicios == null){
+            this.exercicios = new ArrayList<>();
+        }
+        
+        this.exercicios.add(exercicio);
+        exercicio.setTreino(this);
+    }
     
-
-    @Override
-    public String toString() {
-        return "Treino{" +
-                "id=" + id +
-                ", inicio=" + inicio +
-                ", fim=" + fim +
-                ", personal=" + personal +
-                ", aluno=" + aluno +
-                ", series=" + series +
-                '}';
-    }
 }

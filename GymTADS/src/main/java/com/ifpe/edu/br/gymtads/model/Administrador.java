@@ -1,22 +1,32 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.ifpe.edu.br.gymtads.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.Table;
+import java.io.Serializable;
 
+/**
+ *
+ * @author angel
+ */
 @Entity
-@Table(name = "TB_ADMINISTRADOR")
-@DiscriminatorValue(value = "A")
+@Table(name = "TB_PERSONAL")
+@DiscriminatorValue(value = "d")
 @PrimaryKeyJoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")
-public class Administrador extends Usuario {
-
+public class Administrador extends Usuario implements Serializable {
+    
     @Column(name = "TXT_MATRICULA")
     private String matricula;
     
     @Column(name = "TXT_SENHA")
     private String senha;
-
-    public Administrador() {
-    }
-
+    
     public String getMatricula() {
         return matricula;
     }
@@ -32,12 +42,5 @@ public class Administrador extends Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    @Override
-    public String toString() {
-        return "Administrador{" +
-                "matricula='" + matricula + '\'' +
-                ", senha='" + senha + '\'' +
-                '}';
-    }
+    
 }

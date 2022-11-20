@@ -5,6 +5,12 @@
     <artifactId>GymTADS</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <exec.mainClass>com.ifpe.edu.br.gymtads.GymTADS</exec.mainClass>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
@@ -15,17 +21,11 @@
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>org.eclipse.persistence.jpa</artifactId>
             <version>3.0.2</version>
-        </dependency> 
+        </dependency>
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derbyclient</artifactId>
             <version>10.14.2.0</version>
         </dependency>
     </dependencies>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <exec.mainClass>com.ifpe.edu.br.gymtads.GymTADS</exec.mainClass>
-    </properties>
 </project>
