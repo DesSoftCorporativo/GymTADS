@@ -11,6 +11,7 @@ import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -49,7 +50,7 @@ public abstract class Usuario implements Serializable {
     @Embedded
     protected Endereco endereco;
     
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "TB_TELEFONE",
             joinColumns = @JoinColumn(name = "ID_USUARIO"))
     @Column(name = "TXT_NUM_TELEFONE")
@@ -126,15 +127,17 @@ public abstract class Usuario implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.id);
-        sb.append(", ");
         sb.append(this.nome);
         sb.append(", ");
         sb.append(this.sobrenome);
         sb.append(", ");
         sb.append(this.cpf);
-        sb.append(", ");
-        sb.append(this.endereco);
+        
+        for (String telefone : this.telefones) {
+            sb.append(", ");
+            sb.append(telefone);
+        }
+        sb.append(" ]");
 
         return sb.toString();
     }

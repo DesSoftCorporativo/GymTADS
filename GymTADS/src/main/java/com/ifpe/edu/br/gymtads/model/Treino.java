@@ -44,11 +44,11 @@ public class Treino implements Serializable {
     @Column(name = "DT_fim", nullable = true)
     protected Date fim;
     
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ID_PERSONAL", referencedColumnName = "ID")
     private Personal personal;
 
-    @OneToOne(mappedBy = "treino")
+    @OneToOne(mappedBy = "treino", optional = false, fetch = FetchType.LAZY)
     private Aluno aluno;
     
     @Column(name = "TXT_DESCRICAO")
@@ -120,49 +120,6 @@ public class Treino implements Serializable {
         
         this.exercicios.add(exercicio);
         exercicio.setTreino(this);
-    }
-    
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof Treino)) {
-            return false;
-        }
-
-        Treino other = (Treino) object;
-
-        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder("exemplo.jpa.Treino[ ");
-        sb.append(this.id);
-        sb.append(", ");
-        sb.append(this.inicio.toString());
-        sb.append(", ");
-        sb.append(this.fim.toString());
-        sb.append(", ");
-        sb.append(this.personal.toString());
-        sb.append(", ");
-        sb.append(this.aluno.toString());
-        sb.append(", ");
-        sb.append(this.descricao);
-        
-        for (Exercicio exercicio : this.exercicios) {
-            sb.append(", ");
-            sb.append(exercicio.toString());
-        }
-        
-        sb.append(" ]");
-
-        return sb.toString();
     }
     
 }

@@ -82,44 +82,4 @@ public class Exercicio {
         this.treinos.add(treino);
     }
     
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof Exercicio)) {
-            return false;
-        }
-
-        Exercicio other = (Exercicio) object;
-
-        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
-    }
-    
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder("exemplo.jpa.Exercicio[ ");
-        sb.append(this.id);
-        sb.append(", ");
-        sb.append(this.nome);
-        sb.append(", ");
-        sb.append(this.observacao);
-        sb.append(", ");
-        sb.append(this.quantidadeSerieRepeticao);
-        sb.append(", ");
-        
-        for (Treino treino : this.treinos) {
-            sb.append(", ");
-            sb.append(treino.getId());
-        }
-        
-        sb.append(" ]");
-
-        return sb.toString();
-    }
-    
 }

@@ -4,9 +4,11 @@
  */
 package com.ifpe.edu.br.gymtads.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
@@ -24,7 +26,7 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")
 public class Personal extends Usuario implements Serializable {
     
-    @OneToMany(mappedBy = "personal")
+    @OneToMany(mappedBy = "personal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Treino> treinos;
     
     @Column(name = "TXT_SENHA", nullable = false)
@@ -59,19 +61,6 @@ public class Personal extends Usuario implements Serializable {
 
     public void setMatricula(String matricula) {
         this.matricula = matricula;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder("exemplo.jpa.Personal[ ");
-        sb.append(this.id);
-        sb.append(", ");
-        sb.append(super.toString());
-        sb.append(", ");
-        sb.append(matricula);        
-        sb.append(" ]");
-        
-        return sb.toString();
     }
     
 }
