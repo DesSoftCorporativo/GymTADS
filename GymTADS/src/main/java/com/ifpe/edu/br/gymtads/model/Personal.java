@@ -60,5 +60,18 @@ public class Personal extends Usuario implements Serializable {
     public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("exemplo.jpa.Personal[ ");
+        sb.append(this.id);
+        sb.append(", ");
+        sb.append(super.toString());
+        sb.append(", ");
+        sb.append(matricula);        
+        sb.append(" ]");
+        
+        return sb.toString();
+    }
     
 }

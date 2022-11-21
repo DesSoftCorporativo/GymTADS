@@ -43,4 +43,17 @@ public class Administrador extends Usuario implements Serializable {
         this.senha = senha;
     }
     
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("exemplo.jpa.Administrador[ ");
+        sb.append(this.id);
+        sb.append(", ");
+        sb.append(super.toString());
+        sb.append(", ");
+        sb.append(matricula);        
+        sb.append(" ]");
+        
+        return sb.toString();
+    }
+    
 }

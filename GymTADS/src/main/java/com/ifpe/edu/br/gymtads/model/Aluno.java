@@ -36,5 +36,16 @@ public class Aluno extends Usuario implements Serializable{
         this.treino = treino;
         this.treino.setAluno(this);
     }
-    
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("exemplo.jpa.Aluno[ ");
+        sb.append(this.id);
+        sb.append(", ");
+        sb.append(super.toString());
+        sb.append(" ]");
+        
+        return sb.toString();
+    }
+
 }
