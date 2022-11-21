@@ -33,6 +33,7 @@ private static final EntityManagerFactory emf = Persistence.createEntityManagerF
 //        consultaPersonal();
 //        consultaTreino();
 //        consultaExercicio();
+//        consultaAdministrador();
     }
 
     private static void persistir(Personal p, Exercicio e1, Exercicio e2, Exercicio e3, Treino t3, Treino t2, Treino t1, Aluno a1, Aluno a2, Aluno a3, Administrador d) throws IOException {
@@ -74,6 +75,10 @@ private static final EntityManagerFactory emf = Persistence.createEntityManagerF
     }
 
     private static void consultaExercicio() {
+        
+    }
+    
+    private static void consultaAdministrador() {
         
     }
     
@@ -201,4 +206,5 @@ private static final EntityManagerFactory emf = Persistence.createEntityManagerF
         e.setnCasa("142");
         u.setEndereco(e);
     }
+
 }
